@@ -5,26 +5,29 @@
 using namespace std;
 
 int main(){
-    int n, ans=0, sum;
-    int days[20]={0,}, pay[20] = {0,};
+    int n, ans = 0;
+    int day[20]={0,}, pay[20] = {0,}, dp[20] = {0, };
     
     scanf("%d", &n);
     
     for(int i=1;i<=n;i++){
-        scanf("%d %d", &days[i], &pay[i]);
+        scanf("%d %d", &day[i], &pay[i]);
+        dp[i] = pay[i];
+    }
+    
+    for(int i=2; i<=n; i++) {
+        for(int j=1; j<i; j++) {
+            if(i-j >= day[j]) {
+                dp[i] = max(dp[j]+pay[i],dp[i]);
+            }
+        }
     }
     
     for(int i=1; i<=n; i++) {
-        sum = 0;
-        
-        for(int j=i; j<=n && j+days[j]<=n+1 ; j += days[j]){
-            sum += pay[j];
-        }
-        
-        ans = max(sum, ans);
+        if(i+day[i] <= n+1)
+            ans = max(ans, dp[i]);
     }
+    printf("%d\n",ans);
     
-    printf("%d\n", ans);
-    
-    return 1;
+    return 0;
 }
