@@ -17,30 +17,26 @@ int N, M;
 vector<int> cards, targets;
 
 int bst(int num) {
-    int maxIdx = cards.size()-1, minIdx = 0, idx = cards.size()/2;
+    int maxIdx = cards.size()-1, minIdx = 0, idx;
 
-    while(1) {
+    while(maxIdx >= minIdx) {
+        // 절반값
+        idx = (maxIdx+minIdx)/2;
+
         if(cards[idx] == num) {
             return 1;
         }
-        else if(maxIdx == minIdx && cards[idx] != num) {
-            return 0;
-        }
+        else if(cards[idx] != num && minIdx == maxIdx) break;
 
         if(cards[idx] > num) {  // 값이 더 큰 경우: 현재보다 작은 인덱스를 탐색해야함 (왼쪽)
             maxIdx = idx;
-            idx = (minIdx+idx)/2;
         }
         else {  // 값이 더 작은 경우: 현재보다 큰 인덱스쪽을 탐색해야함(오른쪽)
-            minIdx = idx;
-            if((maxIdx+idx)/2 == idx) { // 나눠도 같은 값인 경우
-                idx = (maxIdx+idx)/2 + 1;
-                minIdx = idx;
-            } else {
-                idx = (maxIdx+idx)/2;
-            }
+            minIdx = idx+1;
         }
     }
+
+    return 0;
 }
 
 int main() {
