@@ -21,8 +21,11 @@ void bfs() {
 
     queue<vector<int>> que;
     que.push({1,1}); // 0: 현재 역, 1: 방문한 역의 개수
-    int visit[100001]= {0,};
+
+    // visit: 역 방문여부 확인, eVisit: 하이퍼튜브 방문 확인
+    int visit[100001]= {0,}, eVisit[1001] = {0, };
     visit[1] = 1;
+
 
     while(!que.empty()) {
         int now = que.front()[0], cost = que.front()[1];
@@ -35,6 +38,10 @@ void bfs() {
 
         // 현재 역에 연결되어있는 하이퍼 튜브를 for문으로 돌린다.
         for(int tube : stations[now]) {
+
+            // 해당 하이퍼튜브를 방문했었는지 확인.
+            if(eVisit[tube] == 1) continue;
+            eVisit[tube] = 1;
 
             // 해당 하이퍼튜브에 연결되어있는 역정보를 구한다.
             for(int station: edges[tube]) {
