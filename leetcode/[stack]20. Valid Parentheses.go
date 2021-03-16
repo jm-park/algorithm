@@ -41,6 +41,7 @@ func isValid(s string) bool {
 			if !answer {
 				break
 			} else {
+				// ㄲㅓ내는 부분
 				stack = stack[:len(stack)-1]
 			}
 		}
